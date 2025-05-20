@@ -1,0 +1,3 @@
+- Abertura de uma VPS na OceanDigital
+- Teste de prompt usando tecnicas e mecanismos vistos em sala
+- Tivemos uma serie de perguntas e promts para testarmos a IA, com diversos temas distintos.
