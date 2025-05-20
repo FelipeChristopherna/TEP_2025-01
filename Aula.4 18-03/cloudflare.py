@@ -1,19 +1,39 @@
 import requests
+import base64
+import datetime
 
+# API info
+API_URL = "https://api.cloudflare.com/client/v4/accounts/9a4934d4617a5a2ee925d6c25066ea44/ai/run/black-forest-labs/flux-1-schnell"
+HEADERS = {
+    "Authorization": "Bearer ooe5ErPspRCmhLUmVuxyZEXftX--9HHcIaPCFrdd",
+    "Content-Type": "application/json"
+}
 
-API_BASE_URL = "https://api.cloudflare.com/client/v4/accounts/9a4934d4617a5a2ee925d6c25066ea44/ai/run/"
-headers = {"Authorization": "Bearer Om1PgsZYdw9GJiRb6l_g0XrKatKPUtcB13H1QL35"}
+def gerar_imagem(prompt: str, seed: int = None):
+    data = {
+        "prompt": prompt
+    }
 
+    if seed is not None:
+        data["seed"] = seed
 
-def run(model, inputs):
-    input = { "messages": inputs }
-    response = requests.post(f"{9a4934d4617a5a2ee925d6c25066ea44}{model}", headers=headers, json=input)
-    return response.json()
+    response = requests.post(API_URL, headers=HEADERS, json=data)
 
+    if response.status_code == 200:
+        result = response.json()
+        imagem_base64 = result.get("result", {}).get("image")
 
-inputs = [
-    { "role": "system", "content": "You are a friendly assistan that helps write stories" },
-    { "role": "user", "content": "Write a short story about a llama that goes on a journey to find an orange cloud "}
-];
-output = run("@cf/meta/llama-3-8b-instruct", inputs)
-print(output)
+        if imagem_base64:
+            nome_arquivo = f"imagem_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.jpg"
+            with open(nome_arquivo, "wb") as f:
+                f.write(base64.b64decode(imagem_base64))
+            print(f"✅ Imagem salva como: {nome_arquivo}")
+        else:
+            print("⚠️ Nenhuma imagem retornada.")
+    else:
+        print(f"❌ Erro {response.status_code} - {response.text}")
+
+# ----------------------------------
+# Exemplo de uso
+prompt = "a cyberpunk dragon flying over neon city"
+gerar_imagem(prompt)
