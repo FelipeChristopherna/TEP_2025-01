@@ -269,7 +269,7 @@ Ela caminhava lentamente, absorvendo cada detalhe do entardecer. O céu, manchad
 Análise:
 A perspectiva define a intimidade do texto. A 1ª pessoa traz emoção direta e pessoal. A 2ª pessoa cria empatia e imersão com o leitor. A 3ª pessoa oferece uma visão mais observadora e descritiva, ideal para criar distanciamento narrativo ou focar em múltiplos elementos ao redor do personagem.
 
-9. Escreva dois prompts que descrevam a mesma cena, mas com diferentes níveis de detalhe. Utilize a escala de nível de detalhe de 1 a 10.
+9- Escreva dois prompts que descrevam a mesma cena, mas com diferentes níveis de detalhe. Utilize a escala de nível de detalhe de 1 a 10.
 Tema: Uma cafeteria pela manhã
 
 Prompt – Detalhamento 2/10:
