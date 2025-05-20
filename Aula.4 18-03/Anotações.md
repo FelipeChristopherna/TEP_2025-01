@@ -245,4 +245,44 @@ Saida:
 Analise: O prompt com sentimento triste resultou em uma resposta que expressa a dor, a perda e a dificuldade de seguir em frente, criando um tom emocionalmente pesado e melancólico.
 O prompt com sentimento positivo gerou uma resposta focada no alívio, liberdade e crescimento pessoal após o término, transmitindo otimismo e a visão de um futuro promissor.
 
+8- Crie três prompts sobre o mesmo tema, cada um utilizando uma perspectiva
+diferente: primeira, segunda e terceira pessoa. Utilize a escala de perspectiva de 1
+a 3.
+rompt – Perspectiva 1ª Pessoa (Escala 1):
+"Descreva em primeira pessoa um passeio no parque ao entardecer, destacando os sentimentos e percepções pessoais durante a caminhada."
 
+Saída:
+Caminhei devagar pelo parque enquanto o sol se despedia no horizonte, tingindo o céu de laranja e rosa. O cheiro de grama recém-cortada misturava-se com a brisa fresca que acariciava meu rosto. Ouvi risos distantes e senti um alívio silencioso, como se a natureza estivesse me abraçando naquele momento.
+
+Prompt – Perspectiva 2ª Pessoa (Escala 2):
+"Imagine que você está em um parque ao entardecer. Descreva o ambiente e o que você sente enquanto caminha lentamente por ele."
+
+Saída:
+Você caminha devagar, sentindo a brisa da tarde tocar suavemente sua pele. O sol pinta o céu com cores quentes, e as árvores lançam sombras longas sobre a trilha. Cada passo seu parece mais leve, e o som dos pássaros se mistura com o farfalhar das folhas. É como se o tempo diminuísse o ritmo só para você apreciar o momento.
+
+Prompt – Perspectiva 3ª Pessoa (Escala 3):
+"Descreva um passeio no parque ao entardecer do ponto de vista de um personagem fictício, destacando o ambiente e as emoções do personagem."
+
+Saída:
+Ela caminhava lentamente, absorvendo cada detalhe do entardecer. O céu, manchado por tons dourados e rubros, refletia-se em seus olhos contemplativos. Seus passos eram leves, quase silenciosos, enquanto observava crianças brincando e casais sentados nos bancos. Naquele instante, sentiu que o mundo inteiro estava em paz, ainda que apenas por alguns minutos.
+
+Análise:
+A perspectiva define a intimidade do texto. A 1ª pessoa traz emoção direta e pessoal. A 2ª pessoa cria empatia e imersão com o leitor. A 3ª pessoa oferece uma visão mais observadora e descritiva, ideal para criar distanciamento narrativo ou focar em múltiplos elementos ao redor do personagem.
+
+9. Escreva dois prompts que descrevam a mesma cena, mas com diferentes níveis de detalhe. Utilize a escala de nível de detalhe de 1 a 10.
+Tema: Uma cafeteria pela manhã
+
+Prompt – Detalhamento 2/10:
+"Descreva uma cafeteria pela manhã com poucas informações."
+
+Saída:
+A cafeteria estava aberta. Algumas pessoas tomavam café e conversavam. O ambiente era tranquilo e iluminado pela manhã.
+
+Prompt – Detalhamento 9/10:
+"Descreva uma cafeteria pela manhã com alto nível de detalhes sensoriais. Inclua sons, cheiros, luz, elementos do ambiente e interações entre os clientes."
+
+Saída:
+A cafeteria despertava com os primeiros raios de sol atravessando as janelas amplas, projetando retângulos dourados no chão de madeira escura. O aroma de café fresco se misturava ao cheiro adocicado dos pães de canela saindo do forno. Um barista tatuado manuseava a máquina de espresso enquanto trocava sorrisos com uma cliente de cachecol vermelho. Xícaras tilintavam nas bandejas, e o som suave de jazz preenchia o ar, misturando-se com o burburinho sereno das conversas matinais. Ao fundo, uma criança girava na cadeira giratória, rindo baixinho, enquanto a mãe lia um livro de capa azul com atenção.
+
+Análise:
+Com pouco detalhamento, o texto é funcional e direto, mas não gera imersão. Quando o nível de detalhe aumenta, o cenário ganha vida: conseguimos “ver” a luz, “sentir” o cheiro do café, “ouvir” os sons da cena. O detalhamento é essencial para criar ambientações ricas e envolventes.
