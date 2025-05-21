@@ -1,0 +1,839 @@
+{
+  "name": "Auto Wpp",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "aula",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -420,
+        800
+      ],
+      "id": "fbcb06a6-5318-4925-addc-270dc117d01e",
+      "name": "Webhook",
+      "webhookId": "aa0e74a3-c958-40dc-bb60-00383fc30f46"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b8aee7d7-003e-4cc1-a8ff-7dd427b3342f",
+              "leftValue": "={{ $json.groupid }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "b18c0869-9510-4fa8-b5ec-4bc6e10081fc",
+              "leftValue": "={{ $json.participante.grupo }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "6fdfee1d-765d-4cb3-9bfe-de93d3dc5eed",
+              "leftValue": "={{ $json.frome }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        800
+      ],
+      "id": "37edf2e4-f96c-4d61-8e46-a4e6bfa51d9b",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8a10a580-d478-42c6-bbe3-f08c9da9fced",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        20,
+        160
+      ],
+      "id": "eb863675-f7db-420a-bbdf-b0fd5cdf6337",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "Ft9rFzBfk9vep5Ek",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        180,
+        960
+      ],
+      "id": "51baca58-b031-4be1-8777-4619b2ff5659",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.mensageType }}",
+                    "rightValue": "conversation",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "edb31b8a-ca5c-4ab0-a124-8258e0101070"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "messageText"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "1855686d-abe1-4e43-804b-d8780a2897e3",
+                    "leftValue": "={{ $json.mensageType }}",
+                    "rightValue": "imageMessage",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "imageMessage"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2612d424-3fc3-43af-828b-532ab945034e",
+                    "leftValue": "={{ $json.mensageType }}",
+                    "rightValue": "audioMessage",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "audioMessage"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        380,
+        720
+      ],
+      "id": "6553f9b3-58da-43e6-bfb1-ebc8d4046919",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "model": "meta-llama/llama-4-maverick-17b-128e-instruct",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        1860,
+        940
+      ],
+      "id": "b4540629-6704-4c07-a0a5-2a890b11146a",
+      "name": "Groq Chat Model1",
+      "credentials": {
+        "groqApi": {
+          "id": "Ft9rFzBfk9vep5Ek",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.remoteJid }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        140,
+        200
+      ],
+      "id": "9670cfba-82c0-44a4-b827-79f26aab96e8",
+      "name": "Redis Chat Memory",
+      "notesInFlow": false,
+      "credentials": {
+        "redis": {
+          "id": "TacqlVcY3V8LsPKK",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2540,
+        680
+      ],
+      "id": "94d0e1d2-c932-46f2-8846-da0414f30f55",
+      "name": "Wait",
+      "webhookId": "30160455-afb1-44d8-b0d6-8805125e47a4",
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        2760,
+        680
+      ],
+      "id": "91194bfd-4cd2-478e-8d0f-3896ac72a8a7",
+      "name": "Evolution API1",
+      "credentials": {}
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        2200,
+        860
+      ],
+      "id": "5f089023-0aaf-417a-9855-7f0b84aa37ce",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5153ad67-1e4d-4f05-b8ed-9966fe6f6ef4",
+              "name": "base64",
+              "value": "={{ $('ENTRADA').item.json.audioMessage }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        640,
+        1020
+      ],
+      "id": "90ef105b-ccd0-4cb7-b8e6-6b5a495f2455",
+      "name": "GetBase64"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {
+          "fileName": "audio.ogg",
+          "mimeType": "audio/ogg"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        900,
+        1020
+      ],
+      "id": "0013dc25-6cad-44da-9074-ef199683b89a",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.groq.com/openai/v1/audio/transcriptions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "groqApi",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "whisper-large-v3"
+            },
+            {
+              "name": "response_format",
+              "value": "json"
+            },
+            {
+              "name": "language",
+              "value": "pt"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1140,
+        1020
+      ],
+      "id": "8789ab64-e6f6-4979-89ef-f8daf34d3a97",
+      "name": "Transcrever Audio",
+      "credentials": {
+        "groqApi": {
+          "id": "Ft9rFzBfk9vep5Ek",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f5600dea-937b-4b68-8663-60abe955cbcc",
+              "name": "message",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1360,
+        1020
+      ],
+      "id": "753fc918-004a-48be-bb06-a4d00c24ca5e",
+      "name": "AudioText"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fb68b752-4f0f-492b-b0db-abe6c98f12c2",
+              "name": "message",
+              "value": "={{ $json.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        960,
+        320
+      ],
+      "id": "d4e9ec69-d6fe-4b09-bebb-5c15de40e5da",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        1660,
+        700
+      ],
+      "id": "b242abd7-99e8-40ba-a766-367af3a1df35",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('ENTRADA').item.json.remoteJid }}",
+        "contextWindowLength": "={{ 5 }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        2040,
+        940
+      ],
+      "id": "c0c6e1e6-b1ab-42a8-8705-b93c3ef2fc82",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6ebc2049-4772-4244-a5ee-534f167483b2",
+              "name": "evento",
+              "value": "={{ $json.body.event }}",
+              "type": "string"
+            },
+            {
+              "id": "644e123d-40e5-4b88-b955-ca427a1eaed5",
+              "name": "mensageType",
+              "value": "={{ $json.body.data.messageType }}",
+              "type": "string"
+            },
+            {
+              "id": "123ef8c6-7c1a-4d2d-8557-7844d658b7d7",
+              "name": "message",
+              "value": "={{ $json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "c6d822b0-a027-4b0b-80d0-c4facfefe7ee",
+              "name": "remoteJid",
+              "value": "={{ $json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "0eb47ac6-e02a-4e86-8e3c-5b0e49cfedaf",
+              "name": "groupid",
+              "value": "={{ $json.body.data.message.senderKeyDistributionMessage.groupId }}",
+              "type": "string"
+            },
+            {
+              "id": "f733c67b-a0d8-4309-bcba-ff5348b8387b",
+              "name": "participante.grupo",
+              "value": "={{ $json.body.data.key.participant }}",
+              "type": "string"
+            },
+            {
+              "id": "d35fa48c-d011-4ac7-ac70-e495f921f5e8",
+              "name": "frome",
+              "value": "={{ $json.body.data.key.fromMe }}",
+              "type": "boolean"
+            },
+            {
+              "id": "8fb0d42c-48e6-4135-a5be-adcfaa8f2d30",
+              "name": "audioMessage",
+              "value": "={{ $json.body.data.message.base64 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -220,
+        800
+      ],
+      "id": "2ff17408-01b3-4087-8bb4-d1b9f0ee355a",
+      "name": "ENTRADA"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "011753eb-7a34-47d0-9194-b3e27c6e2ce2",
+              "name": "base64img",
+              "value": "={{ $('Webhook').item.json.body.data.message.base64 }}",
+              "type": "string"
+            },
+            {
+              "id": "4a1db08e-634d-4c02-b132-5cde399cf833",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        700,
+        720
+      ],
+      "id": "dd1e3034-9696-4872-b702-ea5ecf8e078a",
+      "name": "base64img"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.groq.com/openai/v1/chat/completions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "groqApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": [\n        {\n          \"type\": \"text\",\n          \"text\": \"O que tem nesta imagem?\"\n        },\n        {\n          \"type\": \"image_url\",\n          \"image_url\": {\n            \"url\": \"data:image/jpeg;base64,{{ $json.base64img }}\"\n          }\n        }\n      ]\n    }\n  ],\n  \"model\": \"meta-llama/llama-4-scout-17b-16e-instruct\",\n  \"temperature\": 1,\n  \"max_completion_tokens\": 1024,\n  \"top_p\": 1,\n  \"stream\": false,\n  \"stop\": null\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1020,
+        720
+      ],
+      "id": "32fa6d0d-1560-4316-804b-6754a3db703f",
+      "name": "HTTP Request",
+      "credentials": {
+        "groqApi": {
+          "id": "Ft9rFzBfk9vep5Ek",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c1b2b096-86d9-46f0-a428-90255a95e48e",
+              "name": "message",
+              "value": "={{ $json.choices[0].message.content }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1340,
+        720
+      ],
+      "id": "512a1f00-7ea6-4ec1-b8d5-51aefc2c74d9",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        280,
+        100
+      ],
+      "id": "96226c8e-fdb5-42fb-a4f6-f87328a79359",
+      "name": "Chat Memory Manager"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Hello, como posso ajudar?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        1900,
+        680
+      ],
+      "id": "aac07b95-d510-4ffd-bbb6-835847bb62b8",
+      "name": "AI Agent"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "ENTRADA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "base64img",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "GetBase64",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetBase64": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Transcrever Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcrever Audio": {
+      "main": [
+        [
+          {
+            "node": "AudioText",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AudioText": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "ENTRADA": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "base64img": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Chat Memory Manager",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "88f1eb93-0f21-4add-b98d-75f906c3203d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3d2241a931a41caca7ba8f38cf7f8543bef4654d8031ea7e7f027085ba9a77a6"
+  },
+  "id": "BfB6A1ex0f8P3GmL",
+  "tags": []
+}
